@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,14 +13,17 @@ function Posts() {
     fetchPosts(searchId);
   }
 
-  async function fetchPosts(userId) {
-    setLoading(true);
-    const { data } = await axios.get(
-      `https://jsonplaceholder.typicode.com/posts?userId=${userId || id}`,
-    );
-    setPosts(data);
-    setLoading(false);
-  }
+  const fetchPosts = useCallback(
+    async (userId) => {
+      setLoading(true);
+      const { data } = await axios.get(
+        `https://jsonplaceholder.typicode.com/posts?userId=${userId || id}`,
+      );
+      setPosts(data);
+      setLoading(false);
+    },
+    [id],
+  );
 
   function onSearchKeyPress(key) {
     if (key === "Enter") {
