@@ -28,9 +28,9 @@ function Posts() {
     }
   }
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  useEffect((id) => {
+    fetchPosts(id);
+  }, [id]);
 
   return (
     <>
